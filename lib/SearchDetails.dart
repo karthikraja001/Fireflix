@@ -124,222 +124,228 @@ class FlixSearchDetailsState extends State<FlixSearchDetails> {
       },
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: CustomScrollView(slivers: <Widget>[
-          SliverAppBar(
-              backgroundColor: Colors.black,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
-                  child: Container(
-                      child: Column(children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 50.0),
-                          child: SizedBox(
-                              height: 250,
-                              width: 150,
-                              child: Image.network(widget.poster,
-                                  fit: BoxFit.cover)),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Container(
-                                width: MediaQuery.of(context).size.width - 30,
-                                child: Text(
-                                  widget.movie,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
-                                  textAlign: TextAlign.center,
-                                )),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(width: 25),
-                            isDone
-                                ? IconButton(
-                                    onPressed: () async {
-                                      await FirebaseFirestore.instance
-                                          .collection('users')
-                                          .doc(FirebaseAuth
-                                              .instance.currentUser.uid)
-                                          .collection('favourites')
-                                          .doc(movieId.toString())
-                                          .set({
-                                        'image': widget.poster,
-                                        'name': widget.movie
-                                      });
-                                    },
-                                    icon: Icon(
-                                      Icons.favorite,
-                                      color: Colors.pink,
-                                      size: 30,
-                                    ),
-                                  )
-                                : SizedBox(
-                                    height: 10,
-                                    width: 10,
-                                    child: CircularProgressIndicator()),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                                height: 40,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      runTime.toString() + '  Mins',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                )),
-                            Container(
-                                height: 40,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(0.0),
-                                      child: Image.network(
-                                        'https://img.icons8.com/color/96/000000/imdb.png',
-                                        scale: 2,
-                                        fit: BoxFit.fill,
+        body: Builder(
+          builder: (context) {
+          return CustomScrollView(slivers: <Widget>[
+            SliverAppBar(
+                backgroundColor: Colors.black,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Padding(
+                    padding: const EdgeInsets.only(top: 50.0),
+                    child: Container(
+                        child: Column(children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 50.0),
+                            child: SizedBox(
+                                height: 250,
+                                width: 150,
+                                child: Image.network(widget.poster,
+                                    fit: BoxFit.cover)),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Container(
+                                  width: MediaQuery.of(context).size.width - 30,
+                                  child: Text(
+                                    widget.movie,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500),
+                                    textAlign: TextAlign.center,
+                                  )),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(width: 25),
+                              isDone
+                                  ? IconButton(
+                                      onPressed: () async {
+                                        SnackBar snackbar = SnackBar(content: Text('Added to Favourites'),);
+                                        Scaffold.of(context).showSnackBar(snackbar);
+                                        await FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc(FirebaseAuth
+                                                .instance.currentUser.uid)
+                                            .collection('favourites')
+                                            .doc(movieId.toString())
+                                            .set({
+                                          'image': widget.poster,
+                                          'name': widget.movie
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.favorite,
+                                        color: Colors.pink,
+                                        size: 30,
                                       ),
-                                    ),
-                                    SizedBox(width: 7),
-                                    Text(
-                                      rating.toString(),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.white),
-                                    ),
-                                  ],
-                                )),
-                            Container(
-                                height: 40,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        mpaa,
+                                    )
+                                  : SizedBox(
+                                      height: 10,
+                                      width: 10,
+                                      child: CircularProgressIndicator()),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                  height: 40,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        runTime.toString() + '  Mins',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  )),
+                              Container(
+                                  height: 40,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(0.0),
+                                        child: Image.network(
+                                          'https://img.icons8.com/color/96/000000/imdb.png',
+                                          scale: 2,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                      SizedBox(width: 7),
+                                      Text(
+                                        rating.toString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20,
                                             color: Colors.white),
                                       ),
-                                    ),
-                                  ],
-                                ))
-                          ],
-                        ),
-                        isDone==true?Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Container(
-                            height: 40,
-                            width: MediaQuery.of(context).size.width - 30,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5)),
-                            child: OutlineButton.icon(
-                                color: Colors.white,
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => FlixPlayer(
-                                                vidUrl: vidUrl,
-                                              )));
-                                },
-                                icon: Icon(
-                                  Icons.play_arrow,
-                                  color: Colors.black,
-                                ),
-                                label: Text(
-                                  'Play Trailer',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400),
-                                )),
+                                    ],
+                                  )),
+                              Container(
+                                  height: 40,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        child: Text(
+                                          mpaa,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ],
+                                  ))
+                            ],
                           ),
-                        ):Center(
-                          
-                        ),
-                        isDone==true?Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Container(
-                            height: 40,
-                            width: MediaQuery.of(context).size.width - 30,
-                            decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.4),
-                                borderRadius: BorderRadius.circular(5)),
-                            child: FlatButton.icon(
-                                onPressed: () {
-                                  Navigator.push(context, PageTransition(child: FlixDownloads(dMovie: widget.movie,dwnldLink: dwnld,), type: PageTransitionType.leftToRight));
-                                },
-                                icon: Icon(
-                                  Icons.download_outlined,
-                                  color: Colors.black,
-                                ),
-                                label: Text(
-                                  'Download',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                          ),
-                        ):Center(
-                          
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0, top: 20),
-                          child: SizedBox(
-                            height: 200,
-                            width: MediaQuery.of(context).size.width - 30,
-                            child: Text(
-                              desc,
-                              style: TextStyle(
-                                  fontSize: 14,
+                          isDone==true?Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width - 30,
+                              decoration: BoxDecoration(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w500),
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: OutlineButton.icon(
+                                  color: Colors.white,
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => FlixPlayer(
+                                                  vidUrl: vidUrl,
+                                                )));
+                                  },
+                                  icon: Icon(
+                                    Icons.play_arrow,
+                                    color: Colors.black,
+                                  ),
+                                  label: Text(
+                                    'Play Trailer',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400),
+                                  )),
+                            ),
+                          ):Center(
+                            
+                          ),
+                          isDone==true?Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width - 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.4),
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: FlatButton.icon(
+                                  onPressed: () {
+                                    Navigator.push(context, PageTransition(child: FlixDownloads(dMovie: widget.movie,dwnldLink: dwnld,), type: PageTransitionType.leftToRight));
+                                  },
+                                  icon: Icon(
+                                    Icons.download_outlined,
+                                    color: Colors.black,
+                                  ),
+                                  label: Text(
+                                    'Download',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                            ),
+                          ):Center(
+                            
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0, top: 20),
+                            child: SizedBox(
+                              height: 200,
+                              width: MediaQuery.of(context).size.width - 30,
+                              child: Text(
+                                desc,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ),
                           ),
-                        ),
-                      ]),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(widget.poster),
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(
-                                  Colors.black87, BlendMode.darken)))),
+                        ]),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(widget.poster),
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black87, BlendMode.darken)))),
+                  ),
                 ),
-              ),
-              expandedHeight: 900,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back, size: 30, color: Colors.white),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (context) => Home()));
-                },
-              )),
-        ]),
+                expandedHeight: 900,
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back, size: 30, color: Colors.white),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context) => Home()));
+                  },
+                )),
+          ]);
+          },
+        ),
       ),
     );
   }
