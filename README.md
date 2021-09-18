@@ -54,7 +54,7 @@ And So On
 <p align="left">  
 <h3 align="left">Connect with me:</h3>  
 <a href="https://twitter.com/mranonymousofcl" target="blank"><img align="center" src="https://img.icons8.com/doodle/48/000000/twitter--v1.png"/></a>  
-<a href="https://instagram.com/mr.anonymous_official" target="blank"><img align="center" src="https://img.icons8.com/doodle/50/000000/instagram-new.png"/></a>  
+<a href="https://instagram.com/karthikraja.01" target="blank"><img align="center" src="https://img.icons8.com/doodle/50/000000/instagram-new.png"/></a>  
 <a href="https://discord.com/channels/mr_anonymous_2001#4770" target="blank"><img align="center" src="https://img.icons8.com/doodle/48/000000/discord-new-logo.png"/></a>
 </p>  
 
